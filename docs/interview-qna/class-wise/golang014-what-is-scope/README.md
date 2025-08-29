@@ -1,6 +1,6 @@
 # 🧱 Class 14: What is Scope
 
-Scope বলতে code এর part বুঝায় যেখানে একটি নির্দিষ্ট variable কে access করা যাবে।
+Scope বলতে code-এর সেই অংশকে বুঝায়, যেখানে একটি নির্দিষ্ট variable কে access করা যাবে।
 
 ## 📘 ক্লাসে ব্যবহৃত কোড
 
@@ -43,13 +43,13 @@ var (
 )
 ```
 
-🔸 RAM এ একটা জায়গায় এ variable গুলো রাখা হয় যেটাকে **global memory** বলা হয়।
+🔸 RAM-এ একটা জায়গায় এ variable গুলো রাখা হয় যেটাকে **global memory** বলা হয়।
 
-🔸 `a` এবং `b` এই দুইটা RAM এর global scope এ declare করা হয়েছে।
+🔸 `a` এবং `b` এই দুইটা RAM-এর global scope এ declare করা হয়েছে।
 
 🔸 যেকোন ফাংশনের ভেতর থেকে এগুলোকে ব্যবহার করা যাবে।
 
-> 🧠 যেসব ভ্যারিয়েবল `main()` বা অন্য কোনো ফাংশনের বাইরে delare করা হয় - সেগুলো global.
+> 🧠 যেসব ভ্যারিয়েবল `main()` বা অন্য কোনো ফাংশনের বাইরে declare করা হয় - সেগুলো global.
 
 👉 `main()` এবং `add()` function ও RAM এর global scope এ থাকে (বুঝার সুবিধার্থে)।
 
@@ -86,11 +86,11 @@ func main() {
 }
 ```
 
-🔸RAM এ `main()` এর জন্য আলাদা জায়গা দখল করে
+🔸RAM-এ `main()` এর জন্য আলাদা জায়গা দখল করে।
 
-🔸p ও q হলো `main()` এর local variable
+🔸p এবং q হলো `main()` এর local variable।
 
-🔸এগুলো `main()` এর বাইরে থেকে ব্যবহার করা যাবে না
+🔸এগুলো `main()` এর বাইরে থেকে ব্যবহার করা যাবে না।
 
 ```plaintext
 				    RAM
@@ -102,7 +102,7 @@ func main() {
   				main()
 ```
 
-- `main()` এ `add()` function না থাকায় `add()` কে global এ খুঁজে
+- `main()` এ `add()` function না থাকায় `add()` কে global এ খুঁজে।
 
 ### `add()` Execution
 
@@ -113,11 +113,11 @@ func add(x int, y int) {
 }
 ```
 
-🔸 RAM এ `add()` এর জন্য আলাদা জায়গা নেয়
+🔸 RAM-এ `add()` এর জন্য আলাদা জায়গা নেয়।
 
-🔸 `x`, `y` & `z` হল `add()` এর local variable
+🔸 `x`, `y` & `z` হল `add()` এর local variable.
 
-🔸 `x` এবং `y` হল `add()` function এর parameter
+🔸 `x` এবং `y` হল `add()` function এর parameter.
 
 🔸`add()` function শেষ হলে RAM থেকে এদের মুছে ফেলা হয়।
 
@@ -140,9 +140,9 @@ func add(x int, y int) {
 }
 ```
 
-🔸`q` variable `add()` এর local scope এ নেই
+🔸`q` variable `add()` এর local scope-এ নেই।
 
-🔸`q` -> `main()` এর local variable হওয়ায় global scope এ পাওয়া যাবে না
+🔸`q` -> `main()` এর local variable হওয়ায় global scope এ পাওয়া যাবে না।
 
 > Scope এর বাইরের variable use করলে `undefined` compilation error দিবে।
 
@@ -155,11 +155,11 @@ func add(x int, y int) {
 
 ## 🧠 Scope Rule
 
-| কোথায় declare হয়েছে    | কোথা থেকে accessible                  |
-| ---------------------- | ------------------------------------- |
-| ফাংশনের বাইরে (global) | সব ফাংশন থেকে access করা যায় ✅       |
-| ফাংশনের ভিতরে (local)  | শুধু সেই ফাংশনের ভিতরেই accessible ✅ |
-| অন্য ফাংশনের ভিতর      | বাইরে থেকে access করা যায় না ❌       |
+| কোথায় declare হয়েছে    | কোথা থেকে accessible                   |
+| ---------------------- | -------------------------------------- |
+| ফাংশনের বাইরে (global) | সব ফাংশন থেকে access করা যায়। ✅       |
+| ফাংশনের ভিতরে (local)  | শুধু সেই ফাংশনের ভিতরেই accessible। ✅ |
+| অন্য ফাংশনের ভিতর      | বাইরে থেকে access করা যায় না। ❌       |
 
 [**Author :** @nazma98
 **Date:** 2025-06-13
