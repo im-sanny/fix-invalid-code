@@ -1,0 +1,577 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Golang031 Slice - BGCE ARCHIVE</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="../../../favicon-8114d1fc.png">
+        <link rel="stylesheet" href="../../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../../css/general-2459343d.css">
+        <link rel="stylesheet" href="../../../css/chrome-ae938929.css">
+        <link rel="stylesheet" href="../../../css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../../searchindex-09a2b151.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc-69a54fea.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">BGCE ARCHIVE</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/NesoHQ/bgce-archive.git" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="-class-31--go-slice"><a class="header" href="#-class-31--go-slice">📚 Class 31 : Go Slice</a></h1>
+<h2 id="-main-topics"><a class="header" href="#-main-topics">🚀 Main Topics</a></h2>
+<ul>
+<li>Slice কী?</li>
+<li>একটি Slice এ কয়টি অংশ থাকে?</li>
+<li>Slice এর Pointer, Length, এবং Capacity নির্ণয় করা</li>
+<li>বিদ্যমান Array থেকে Slice তৈরি</li>
+<li>বিদ্যমান Slice থেকে নতুন Slice তৈরি</li>
+<li>Slice Literal (সরাসরি ঘোষণা)</li>
+<li><code>make()</code> দিয়ে Slice তৈরি (শুধু length)</li>
+<li><code>make()</code> দিয়ে Slice তৈরি (length এবং capacity)</li>
+<li>খালি বা Nil Slice তৈরি</li>
+<li>Slice এ নতুন element যোগ করা (append)</li>
+<li><code>append</code> করার সময় অভ্যন্তরীণ প্রক্রিয়া (Heap এবং Underlying Array)</li>
+<li>Underlying Array কীভাবে dynamic ভাবে বাড়ে</li>
+<li>কিছু মজার উদাহরণ এবং ইন্টারভিউ প্রশ্ন</li>
+<li>Variadic Functions</li>
+</ul>
+<hr>
+<h1 id="-১-slice-কী"><a class="header" href="#-১-slice-কী">🧠 ১. Slice কী?</a></h1>
+<ul>
+<li><strong>Slice</strong> হলো Go এর একটি flexible data structure।</li>
+<li>এটি মূলত array এর উপরে নির্মিত একটি <strong>dynamic view</strong>।</li>
+<li>array এর মত হলেও, slice এর সাইজ পরিবর্তন করা যায় (বড় বা ছোট করা যায়)।</li>
+</ul>
+<p><strong>মূল পয়েন্ট:</strong></p>
+<ul>
+<li>Slice, array নয়।</li>
+<li>Slice, array এর উপরে তৈরি হয়।</li>
+</ul>
+<hr>
+<h1 id="-২-একটি-slice-এর-কয়টি-অংশ-থাকে"><a class="header" href="#-২-একটি-slice-এর-কয়টি-অংশ-থাকে">🔥 ২. একটি Slice এর কয়টি অংশ থাকে?</a></h1>
+<p>Slice মূলত একটি <strong>struct</strong> যা তিনটি অংশ নিয়ে গঠিত:</p>
+<pre><code class="language-go">struct Slice {
+    pointer *T // points underlying array
+    length  int // current elements number
+    capacity int // maximum elements (until reallocation)
+	}
+</code></pre>
+<p>Slice কে মূলত একটি array এর “window” হিসেবে ভাবা যেতে পারে।</p>
+<hr>
+<h1 id="-৩-pointer-length-এবং-capacity-নিরধারণ-করার-উপায"><a class="header" href="#-৩-pointer-length-এবং-capacity-নিরধারণ-করার-উপায">🕵️‍♂️ ৩. Pointer, length এবং capacity নির্ধারণ করার উপায়</a></h1>
+<p>নিম্নোক্ত built-in ফাংশন ব্যবহার করে Slice এর length এবং capacity বের করা যায়:</p>
+<ul>
+<li><code>len(slice)</code> ➡️ Length</li>
+<li><code>cap(slice)</code> ➡️ Capacity</li>
+</ul>
+<p>উদাহরণ:</p>
+<pre><code class="language-go">s := arr[1:4] // index 1 to 3
+fmt.Println(len(s)) // 3
+fmt.Println(cap(s)) //  index 1 to end of the array
+</code></pre>
+<hr>
+<h1 id="-৪-array-থেকে-slice-তৈরি-করা"><a class="header" href="#-৪-array-থেকে-slice-তৈরি-করা">🏗 ৪. Array থেকে Slice তৈরি করা</a></h1>
+<pre><code class="language-go">arr := [6]string{"This", "is", "a", "Go", "interview", "Questions"}
+s := arr[1:4] // slice ["is", "a", "Go"]
+</code></pre>
+<ul>
+<li><code>pointer</code>: <code>arr</code> এর index 1 নির্দেশ করে</li>
+<li><code>length</code>: 3 (index 1 to 3)</li>
+<li><code>capacity</code>: 5 (index 1 to 5)</li>
+</ul>
+<hr>
+<h1 id="-৫-slice-থেকে-নতুন-slice-তৈরি"><a class="header" href="#-৫-slice-থেকে-নতুন-slice-তৈরি">🔄 ৫. Slice থেকে নতুন Slice তৈরি</a></h1>
+<pre><code class="language-go">s1 := s[1:2] // Slice "a"
+</code></pre>
+<ul>
+<li><code>s1</code> Slice টি একই Array এর একটি <strong>view</strong>!</li>
+<li><code>s1</code> পরিবর্তন করলে <code>arr</code> এর মানও পরিবর্তিত হতে পারে।</li>
+</ul>
+<hr>
+<h1 id="-6-slice-literal"><a class="header" href="#-6-slice-literal">✍️ 6. Slice Literal</a></h1>
+<p>একটি Slice তৈরি করতে সরাসরি মান ব্যবহার করা যায়, আলাদা করে Array তৈরি করার প্রয়োজন নেই।</p>
+<pre><code class="language-go">s2 := []int{3, 4, 7}
+</code></pre>
+<h2 id="এখানে-go-automatically-একটি-underlying-array-তৈরি-করে"><a class="header" href="#এখানে-go-automatically-একটি-underlying-array-তৈরি-করে">এখানে Go automatically একটি underlying Array তৈরি করে।</a></h2>
+<h1 id="-৭-make-দিযে-একটি-slice-তৈরি-করা"><a class="header" href="#-৭-make-দিযে-একটি-slice-তৈরি-করা">🏗️ ৭. make() দিয়ে একটি Slice তৈরি করা</a></h1>
+<pre><code class="language-go">s3 := make([]int, 3)
+</code></pre>
+<ul>
+<li><code>make()</code> দিয়ে ৩টি শূন্য মান (zero) সহ একটি Slice তৈরি করে। অর্থাৎ, ৩টি empty element থাকবে।</li>
+<li><code>len = 3</code>, <code>cap = 3</code></li>
+</ul>
+<hr>
+<h1 id="-৮-make-দিযে-একটি-slice-তৈরি-করা-length-এবং-capacity"><a class="header" href="#-৮-make-দিযে-একটি-slice-তৈরি-করা-length-এবং-capacity">🏗️🏗️ ৮. <code>make()</code> দিয়ে একটি Slice তৈরি করা (length এবং capacity)</a></h1>
+<pre><code class="language-go">s4 := make([]int, 3, 5)
+</code></pre>
+<ul>
+<li><code>len = 3</code>, কিন্তু capacity <code>cap = 5</code> পর্যন্ত হতে পারে reallocation এর আগ পর্যন্ত</li>
+</ul>
+<hr>
+<h1 id="-9-empty--nil-slice-তৈরি"><a class="header" href="#-9-empty--nil-slice-তৈরি">🕳 9. Empty / Nil Slice তৈরি</a></h1>
+<pre><code class="language-go">var s5 []int
+</code></pre>
+<ul>
+<li><code>len = 0</code>, <code>cap = 0</code></li>
+<li>Still valid! এতে নতুন element যোগ (append) করা যাবে।</li>
+</ul>
+<hr>
+<h1 id="-১০-slice-এ-নতুন-element-append-করা"><a class="header" href="#-১০-slice-এ-নতুন-element-append-করা">➕ ১০. Slice এ নতুন element append করা</a></h1>
+<pre><code class="language-go">s6 := append(s6, 1)
+</code></pre>
+<ul>
+<li>Go নিজে থেকে underlying Array বড় করে।</li>
+<li><em>অনেক বড় Array</em> তৈরি এবং আগের element গুলো copy করার কাজও করে থাকে।</li>
+</ul>
+<hr>
+<h1 id="-১১-append-করার-সময়-আসলে-কী-হয়"><a class="header" href="#-১১-append-করার-সময়-আসলে-কী-হয়">🧬 ১১. append করার সময় আসলে কী হয়?</a></h1>
+<p>যখন একটি Slice এর capacity পূর্ণ হয়:</p>
+<ul>
+<li>একটি <strong>নতুন Array</strong> (সাধারণত দ্বিগুণ সাইজের) তৈরি করা হয়।</li>
+<li>আগের Array এর সমস্ত elements নতুন Array তে কপি করা হয়।</li>
+</ul>
+<p>এ কারণেই কখনও কখনও append করা দ্রুত মনে হয় এবং কখনও বড় মেমরি অপারেশন তৈরি করতে পারে।</p>
+<hr>
+<h1 id="-১২-underlying-array-কিভাবে-বৃদধি-পায"><a class="header" href="#-১২-underlying-array-কিভাবে-বৃদধি-পায">📈 ১২. Underlying Array কিভাবে বৃদ্ধি পায়:</a></h1>
+<p><strong>যে প্যাটার্নে capacity পায় (Capacity Growth Pattern):</strong> (simplified)</p>
+<ul>
+<li>Cap 1 ➡️ 2 ➡️ 4 ➡️ 8 ➡️ 16 ➡️ …</li>
+</ul>
+<p>এটি একটি optimization technique যা নিশ্চিত করে যেন append অপারেশনগুলো গড়ে <code>O(1)</code> সময়ে সম্পন্ন হয়।</p>
+<hr>
+<h1 id="go-slice-বৃদধি-len-এবং-cap-এর-dynamics-বোঝা"><a class="header" href="#go-slice-বৃদধি-len-এবং-cap-এর-dynamics-বোঝা">Go Slice বৃদ্ধি: <code>len</code> এবং <code>cap</code> এর dynamics বোঝা</a></h1>
+<p>Go Slice একটি শক্তিশালী এবং flexible data structure, যা dynamic Array এর মতো কাজ করে। এর একটি মূল বৈশিষ্ট্য হলো, যখন নতুন element যোগ করা হয়, তখন Slice নিজে নিজেই বৃদ্ধি পায়। Slice কীভাবে এবং কখন বৃদ্ধি পায়, আর এর মেমরি অ্যালোকেশনের পদ্ধতি বুঝলে অনেক efficient program design করা সম্ভব।</p>
+<p>এখন আমরা Go Slice এর বৃদ্ধির পদ্ধতি বিশ্লেষণ করব:</p>
+<ul>
+<li>যদি Slice এর <code>len</code> এবং <code>cap</code> <code>1024</code>-এর কম হয়, তাহলে এটি সাধারণত দ্বিগুণ (2x) বৃদ্ধি পায়।</li>
+<li><code>len</code> এবং <code>cap</code>, <code>1024</code> ছাড়িয়ে গেলে, এটি প্রায় 25% হারে বৃদ্ধি পায়।</li>
+<li>Slice কেন নির্দিষ্ট পরিমাণে (যেমন 1024 থেকে 1280) না বাড়িয়ে বড় ব্লকে (যেমন 1536) বাড়ে, সেটিও ব্যাখ্যা করা হবে।</li>
+</ul>
+<h2 id="slice-growth-overview"><a class="header" href="#slice-growth-overview">Slice Growth Overview</a></h2>
+<p>Go তে slice মূলত array এর উপরে ভিত্তি করে কাজ করে। যখন একটি slice এ নতুন element append করা হয়, তখন প্রয়োজনে Go একটি বড় array তৈরি করে এবং পুরানো element গুলো তাতে কপি করে। এই প্রসেসটি নির্ভর করে Go কিভাবে নতুন capacity নির্ধারণ করে এবং মেমরি allocate করে।</p>
+<h3 id="১২১-ছোট-slice-এর-কষেতরে-দবিগুণ-বৃদধি-lencap--1024"><a class="header" href="#১২১-ছোট-slice-এর-কষেতরে-দবিগুণ-বৃদধি-lencap--1024">১২.১. ছোট Slice এর ক্ষেত্রে দ্বিগুণ বৃদ্ধি (<code>len(cap) &lt; 1024</code>)</a></h3>
+<p>যখন slice ছোট থাকে (অর্থাৎ, এর <code>len</code> এবং <code>cap</code> দুটোই 1024 এর কম), তখন Go সাধারণত capacity <strong>দ্বিগুণ</strong> করে। এর মানে, যখন slice এ একটি element যোগ করা হয় এবং নতুন মেমরি প্রয়োজন হয়, তখন Go আগের capacity এর দ্বিগুণ আকারের একটি নতুন array তৈরি করে এবং পুরানো element গুলো সেখানে কপি করে। Slice এর <code>len</code> ১ বাড়বে, কিন্তু <code>cap</code> দ্বিগুণ হবে।</p>
+<h4 id="উদাহরণ"><a class="header" href="#উদাহরণ">উদাহরণ:</a></h4>
+<pre><code class="language-go">s := []int{1, 2, 3}
+fmt.Println(len(s), cap(s)) // len: 3, cap: 3
+
+s = append(s, 4)
+fmt.Println(len(s), cap(s)) // len: 4, cap: 6
+
+s = append(s, 5)
+fmt.Println(len(s), cap(s)) // len: 5, cap: 6
+</code></pre>
+<ul>
+<li>প্রথমে, slice এর <code>len</code> ৩ এবং <code>cap</code> ৩ থাকে।</li>
+<li>চতুর্থ element যোগ করার সময়, slice এর capacity ৩ থেকে দ্বিগুণ হয়ে ৬ হয়ে যায়।</li>
+<li>পরবর্তী অ্যাপেন্ডে, slice এর capacity ৬ ই থাকবে কারণ <code>len</code> &lt; <code>cap</code>।</li>
+</ul>
+<h3 id="১২২-বড-slice-এর-কষেতরে-২৫-বৃদধি-lencap--1024"><a class="header" href="#১২২-বড-slice-এর-কষেতরে-২৫-বৃদধি-lencap--1024">১২.২. বড় Slice এর ক্ষেত্রে ২৫% বৃদ্ধি (<code>len(cap) &gt;= 1024</code>)</a></h3>
+<p>যখন slice এর <code>len</code> এবং <code>cap</code> 1024 বা তার বেশি হয়, তখন Go দ্বিগুণের পরিবর্তে বর্তমান capacity এর <strong>২৫%</strong> বৃদ্ধি করে। এই কৌশলটি ঘন ঘন মেমরি reallocation এড়াতে এবং অপ্রয়োজনীয় মেমরি অপচয় কমাতে সহায়তা করে।</p>
+<h4 id="উদাহরণ-1"><a class="header" href="#উদাহরণ-1">উদাহরণ:</a></h4>
+<pre><code class="language-go">s := make([]int, 1024)  // len: 1024, cap: 1024
+fmt.Println(len(s), cap(s))
+
+s = append(s, 1025) // len: 1025, cap: 1280 (1024 + 25% of 1024)
+fmt.Println(len(s), cap(s))
+
+s = append(s, 1300) // len: 1300, cap: 1600 (1280 + 25% of 1280)
+fmt.Println(len(s), cap(s))
+</code></pre>
+<ul>
+<li>শুরুতে, আমরা length এবং capacity 1024 সহ একটি slice তৈরি করি।</li>
+<li>পরের element append করলে slice এর capacity 1024 থেকে 1280 হয়, যা 1024 এর সাথে ২৫% যোগ করে পাওয়া যায়।</li>
+<li>আরেকটি element append করলে capacity 1600 হয় (1280 এর সাথে ২৫% যোগ করে)।</li>
+</ul>
+<h3 id="১২৩-মেমরি-বলকের-ভূমিকা-যেমন-1536-কষমতার-slice"><a class="header" href="#১২৩-মেমরি-বলকের-ভূমিকা-যেমন-1536-কষমতার-slice">১২.৩. মেমরি ব্লকের ভূমিকা (যেমন, 1536 ক্ষমতার Slice)</a></h3>
+<p>যখন slice এর <code>len</code> এবং <code>cap</code> 1024 এর কাছাকাছি বা তার বেশি হয়, তখন Go সর্বদা নিখুঁত গণনা অনুযায়ী মেমরি বরাদ্দ করে না। এর পরিবর্তে এটি সিস্টেম মেমরি বরাদ্দের ধরণ অনুযায়ী <strong>Optimal Memory Block</strong> ব্যবহার করে।</p>
+<p>উদাহরণস্বরূপ, যদি একটি slice এর capacity 1024 এর কাছাকাছি থাকে, পরবর্তী বরাদ্দ সরাসরি 256 যোগ করে 1280 না হয়ে, এর থেকে বড় 1536 এর মতো ব্লকে হতে পারে। এটি বড় মেমরি ব্লকের জন্য আরও কার্যকর মেমরি ব্যবহারে সহায়তা করে।</p>
+<h4 id="কেন-1536-এর-পরিবরতে-1280"><a class="header" href="#কেন-1536-এর-পরিবরতে-1280">কেন 1536 এর পরিবর্তে 1280?</a></h4>
+<p>এটি মূলত <strong>Hardware Memory Alignment</strong> এর উপর নির্ভর করে। 1536 সংখ্যাটি বেছে নেওয়া হয় কারণ এটি সাধারণত 2-এর গুণিতক আকারের মেমরি ব্লকের সাথে ভালোভাবে মিলে যায় এবং আধুনিক CPU এবং মেমরি সিস্টেমের জন্য optimize করা। মেমরি অ্যালোকেশন সাধারণত সিস্টেমের memory page size বা cache line এর সাথে সামঞ্জস্য রেখে বড় ব্লকে করা হয়, যা মেমরি অ্যাক্সেসকে আরও ইফিশিয়েন্ট করে তোলে।</p>
+<h4 id="উদাহরণ-memory-alignment"><a class="header" href="#উদাহরণ-memory-alignment">উদাহরণ (memory alignment):</a></h4>
+<pre><code class="language-go">s := make([]int, 1024) // len: 1024, cap: 1024
+fmt.Println(len(s), cap(s)) // 1024, 1024
+
+s = append(s, 1025) // len: 1025, cap: 1536 (next optimal block size)
+fmt.Println(len(s), cap(s)) // 1025, 1536
+</code></pre>
+<ul>
+<li>1024 থেকে 1536 এ capacity বৃদ্ধি হয়, কারণ 1536 একটি বেটার মেমরি ব্লক যা সিস্টেমের ইফিশিয়েন্ট মেমরি অ্যালোকেশন করে।</li>
+</ul>
+<h3 id="১২৪-কেন-এমন-হয"><a class="header" href="#১২৪-কেন-এমন-হয">১২.৪. কেন এমন হয়?</a></h3>
+<p><strong>efficiency considerations</strong> Go সরাসরি 256 করে বৃদ্ধি করে না (যেমন আমরা মনে করি 1024 থেকে 1280)। কারণ এটি ইফিশিয়েন্সি বৃদ্ধির জন্য গুরুত্বপূর্ণ। এই অ্যালোকেশন স্ট্র্যাটেজির ফলে ঘন ঘন রি-অ্যালোকেশন এড়ানো যায় এবং অপ্রয়োজনীয় মেমরি অপচয় কমে যায়। বরং বড় ব্লকে (1536) মেমরি বরাদ্দ করে Go রানটাইম নিশ্চিত করে Sliceে পর্যাপ্ত capacity আছে আরও element এপেন্ড করার জন্য এবং খুব তাড়াতাড়ি Sliceকে বাড়াতে হবে না।</p>
+<p>এর ফলে আরও ভালো performance পাওয়া যায়, বিশেষ করে যখন slice দ্রুত বৃদ্ধি পায়।</p>
+<h2 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h2>
+<p>Go-এর slice বৃদ্ধি কৌশল অনেক ইফিশিয়েন্ট কোড লিখা সম্ভব। ছোট সাইজের slice এর ক্ষেত্রে, Go capacity দ্বিগুণ করে যাতে কম রি-অ্যালোকেশনে আরও element ধারণ করতে পারে। বড় slice (1024 এবং এর বেশি) হলে, এটি capacity ২৫% বৃদ্ধি করে এবং মাঝে মাঝে অপ্টিমাল মেমরি ব্লকের সাথে সামঞ্জস্য রাখে। এই পদ্ধতিটি slice কে দ্রুত এবং মেমরি সাশ্রয়ী করে তোলে।</p>
+<hr>
+<h1 id="১৩-কিছু-ইনটারেসটিং-ইনটারভিউ-পরশনের-উদাহরণ"><a class="header" href="#১৩-কিছু-ইনটারেসটিং-ইনটারভিউ-পরশনের-উদাহরণ">🤯১৩. কিছু ইন্টারেস্টিং ইন্টারভিউ প্রশ্নের উদাহরণ</a></h1>
+<h3 id="-some-underlying-array-trick"><a class="header" href="#-some-underlying-array-trick">⚡ Some Underlying Array Trick</a></h3>
+<pre><code class="language-go">var x []int
+x = append(x, 1)
+x = append(x, 2)
+x = append(x, 3)
+
+y := x
+x = append(x, 4)
+y = append(y, 5)
+
+x[0] = 10
+fmt.Println(x)
+fmt.Println(y)
+</code></pre>
+<p>-x এবং y একই backing array শেয়ার করে</p>
+<ul>
+<li>একটিতে পরিবর্তন (mutation) করলে দুটোরই মান পরিবর্তিত হতে পারে।</li>
+</ul>
+<p>কিন্তু <code>cap</code> অতিক্রম করে অ্যাপেন্ড করলে, তারা আলাদা Array তে বিভক্ত হতে পারে।</p>
+<h1 id="-১৪-variadic-functions"><a class="header" href="#-১৪-variadic-functions">🛠 ১৪. Variadic Functions</a></h1>
+<p>কোন ফাংশন <code>...</code> (ellipsis) operator ব্যবহার করে অসংখ্য argument receive করতে পারে।</p>
+<pre><code class="language-go">func variadic(numbers ...int) {
+    fmt.Println(numbers)
+}
+
+variadic(2, 3, 4, 6, 8, 10)
+</code></pre>
+<p>এখানে <code>numbers</code> কিন্তু একটি <strong>slice</strong>!</p>
+<hr>
+<h1 id="-ram-এ-slice-এর-visualization-arr-এবং-s-এর-জনয"><a class="header" href="#-ram-এ-slice-এর-visualization-arr-এবং-s-এর-জনয">🧠 RAM এ Slice এর visualization (arr এবং s এর জন্য)</a></h1>
+<pre><code>Array arr (indexes):
+[0] "This"
+[1] "is"  &lt;- s.ptr points here
+[2] "a"
+[3] "Go"
+[4] "interview"
+[5] "Questions"
+
+Slice s:
+- ptr = &amp;arr[1]
+- len = 3 ("is", "a", "Go")
+- cap = 5 (from "is" to "Questions")
+</code></pre>
+<p>Memory Visualization:</p>
+<pre><code>+----+--+-+--+---------+---------+
+|This|is|a|Go|interview|Questions|
++----+--+-+--+---------+---------+
+       ^ ^  ^
+     s[0] s[1] s[2]
+</code></pre>
+<hr>
+<h1 id="-full-code-with-detailed-comments"><a class="header" href="#-full-code-with-detailed-comments">📄 Full Code with Detailed Comments</a></h1>
+<pre><code class="language-go">package main
+
+import "fmt"
+
+func main() {
+	// Create an array of strings
+	arr := [6]string{"This", "is", "a", "Go", "interview", "Questions"}
+	fmt.Println(arr)
+
+	// Create a slice from array indexes 1 to 3 (exclusive of 4)
+	s := arr[1:4]
+	fmt.Println(s) // [is a Go]
+
+	// Create a slice from a slice
+	s1 := s[1:2]
+	fmt.Println(s1) // [a]
+	fmt.Println(len(s1)) // 1
+	fmt.Println(cap(s1)) // 4 (capacity depends on the underlying array)
+
+	// Slice literal
+	s2 := []int{3, 4, 7}
+	fmt.Println("slice", s2, "lenght:", len(s2), "capacity:", cap(s2))
+
+	// make() function with length only
+	s3 := make([]int, 3)
+	s3[0] = 5
+	fmt.Println(s3)
+	fmt.Println(len(s3))
+	fmt.Println(cap(s3))
+
+	// make() function with length and capacity
+	s4 := make([]int, 3, 5)
+	s4[0] = 5
+	fmt.Println(s4)
+	fmt.Println(len(s4))
+	fmt.Println(cap(s4))
+
+	// Empty slice
+	var s5 []int
+	fmt.Println(s5) // []
+
+	// Appending elements to empty slice
+	var s6 []int
+	s6 = append(s6, 1)
+	fmt.Println(s6) // [1]
+
+	var s7 []int
+	s7 = append(s7, 1, 2, 3)
+	fmt.Println(s7, len(s7), cap(s7)) // [1 2 3] 3 3
+
+	// Interview question: Sharing underlying array
+	var x []int
+	x = append(x, 1)
+	x = append(x, 2)
+	x = append(x, 3)
+
+	y := x
+	x = append(x, 4)
+	y = append(y, 5)
+
+	x[0] = 10
+
+	fmt.Println(x) // [10 2 3 5]
+	fmt.Println(y) // [10 2 3 5]
+
+	// Another interview question
+	slc := []int{1, 2, 3, 4, 5}
+	slc = append(slc, 6)
+	slc = append(slc, 7)
+
+	slcA := slc[4:]
+
+	slcY := changeSlice(slcA)
+
+	fmt.Println(slc)  // [1 2 3 4 10 6 7]
+	fmt.Println(slcY) // [10 6 7 11]
+	fmt.Println(slc[0:8]) // [1 2 3 4 10 6 7 11]
+
+	// Variadic function call
+	variadic(2, 3, 4, 6, 8, 10)
+}
+
+// Function that changes the slice passed
+func changeSlice(a []int) []int {
+	a[0] = 10
+	a = append(a, 11)
+	return a
+}
+
+// Variadic function that takes multiple integers
+func variadic(numbers ...int) {
+	fmt.Println(numbers)
+	fmt.Println(len(numbers))
+	fmt.Println(cap(numbers))
+}
+</code></pre>
+<p>[<strong>Author:</strong> @ifrunruhin12, @nazma98
+<strong>Date:</strong> 2025-05-01 - 2025-05-18
+<strong>Category:</strong> interview-qa/class-wise
+]</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../interview-qna/class-wise/golang030-pointers/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../interview-qna/class-wise/golang032-Computer-Architecture-and-History/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../interview-qna/class-wise/golang030-pointers/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../interview-qna/class-wise/golang032-Computer-Architecture-and-History/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../../mark-09e88c2c.min.js"></script>
+        <script src="../../../searcher-c2a407aa.js"></script>
+
+        <script src="../../../clipboard-1626706a.min.js"></script>
+        <script src="../../../highlight-abc7f01d.js"></script>
+        <script src="../../../book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+
+    </div>
+    </body>
+</html>
